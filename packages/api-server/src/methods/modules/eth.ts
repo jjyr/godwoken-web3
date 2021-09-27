@@ -563,6 +563,7 @@ export class Eth {
     const txHash: Hash = args[0];
 
     const tx = await this.query.getTransactionByHash(txHash);
+    console.log("query tx",txHash, tx);
     if (tx != null) {
       const apiTx = toApiTransaction(tx);
       return apiTx;
@@ -570,10 +571,12 @@ export class Eth {
 
     // if null, find pending transactions
     const godwokenTxWithStatus = await this.rpc.getTransaction(txHash);
+    console.log("query gw tx",txHash, godwokenTxWithStatus);
     if (godwokenTxWithStatus == null) {
       return null;
     }
     const godwokenTxReceipt = await this.rpc.getTransactionReceipt(txHash);
+    console.log("query gw tx receipt",txHash, godwokenTxWithStatus);
     const tipBlock = await this.query.getTipBlock();
     if (tipBlock == null) {
       throw new Error("tip block not found!");
@@ -660,10 +663,12 @@ export class Eth {
     }
 
     const godwokenTxWithStatus = await this.rpc.getTransaction(txHash);
+    console.log("receipt query gw tx receipt",txHash, godwokenTxWithStatus);
     if (godwokenTxWithStatus == null) {
       return null;
     }
     const godwokenTxReceipt = await this.rpc.getTransactionReceipt(txHash);
+    console.log("receipt query gw tx receipt",txHash, godwokenTxReceipt);
     if (godwokenTxReceipt == null) {
       return null;
     }
